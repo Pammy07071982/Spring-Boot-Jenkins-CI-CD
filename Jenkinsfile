@@ -1,7 +1,10 @@
 pipeline {
     agent any
 
-  
+    tools{
+        jdk 'jdk17'
+        maven 'maven3'
+    }
 
     stages {
         stage('Code Checkout') {
@@ -9,7 +12,7 @@ pipeline {
                 git branch: 'main', changelog: false, poll: false, url: 'https://github.com/AbderrahmaneOd/Spring-Boot-Jenkins-CI-CD'
             }
         }
-      /*  
+        
         stage('OWASP Dependency Check'){
             steps{
                 dependencyCheck additionalArguments: '--scan ./ --format HTML ', odcInstallation: 'db-check'
@@ -24,7 +27,7 @@ pipeline {
                     -Dsonar.login=squ_9bd7c664e4941bd4e7670a88ed93d68af40b42a3 '''
             }
         }
-*/
+
         stage('Clean & Package'){
             steps{
                 sh "mvn clean package -DskipTests"
